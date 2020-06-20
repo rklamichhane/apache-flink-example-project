@@ -50,7 +50,7 @@ public class SalesRecordsFileSource {
                 inputFieldTypes,
                 "\n",
                 ",");
-
+        inputFormat.setSkipFirstLineAsHeader(true);
         DataStream<Row> parsedRows = env.readFile(inputFormat,csvFile)
                 .returns(Types.ROW(inputFieldTypes))
                 .setParallelism(1);
