@@ -14,7 +14,7 @@ This project is tested with flink-1.9.3. [Download](https://flink.apache.org/dow
 dependency. MongoDB driver `org.mongodb:mongodb-driver-sync:3.7` is also required.
 ### Configuration Required ##
 Following configuration in [config.properties](https://github.com/rklamichhane/apache-flink-example-project/blob/master/src/main/resources/config.properties) is required for MongoDB. Custom 
-properties file could be passed from command line with `--config`. If not passed property file from resources folder is used.
+properties file should be passed from command line with `--config`. 
 ```$xslt
 db.url=mongodb://localhost:27017
 db.user=rk
@@ -22,8 +22,8 @@ db.password=Secure@123!
 db.database=admin
 db.collection=country_with_revenue
 ```
-Mapping for csv headers to columns in file is defined [here](https://github.com/rklamichhane/apache-flink-example-project/blob/master/src/main/resources/csv-column-map.properties) for flexible input. You can pass your own mapping with command line argument
-`--mapping`. If not provided, default mapping in resources folder is used.
+Mapping for csv headers to columns in file is defined [here](https://github.com/rklamichhane/apache-flink-example-project/blob/master/src/main/resources/csv-column-map.properties) for flexible input. You should pass your own mapping with command line argument
+`--mapping`.
 Main application for this project is [CountryRevenueCalculator.java](https://github.com/rklamichhane/apache-flink-example-project/blob/master/src/main/java/streamapp/CountryRevenueCalculator.java) .
 
 Example command:
