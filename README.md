@@ -25,3 +25,8 @@ db.collection=country_with_revenue
 Mapping for csv headers to columns in file is defined [here](https://github.com/rklamichhane/apache-flink-example-project/blob/master/src/main/resources/csv-column-map.properties) for flexible input. You can pass your own mapping with command line argument
 `--mapping`. If not provided, default mapping in resources folder is used.
 Main application for this project is [CountryRevenueCalculator.java](https://github.com/rklamichhane/apache-flink-example-project/blob/master/src/main/java/streamapp/CountryRevenueCalculator.java) .
+
+Example command:
+```>flink run out\artifacts\flink_example_project_jar\flink-example-project.jar --config "C:\Users\acer\Desktop\flink-example-project\src\main\r
+   esources\config.properties" --mapping "C:\Users\acer\Desktop\flink-example-project\src\main\resources\csv-column-map.properties" --input "C:\Users\acer\Desktop\flink-example-project\da
+   ta\records.csv"```

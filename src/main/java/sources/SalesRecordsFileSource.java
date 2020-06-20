@@ -15,7 +15,6 @@ import scala.xml.PrettyPrinter;
 
 
 public class SalesRecordsFileSource {
-    private static  ParameterTool csvMappings = null;
     // Defining FieldType we will use as input and output for function
     // It's always good to model input data completely, Even if we use few columns
     // This requires more data validation but for this example we can assume data is perfect.
@@ -42,18 +41,15 @@ public class SalesRecordsFileSource {
      *
      * @param env     The execution environment.
      * @param csvFile The path of the CSV file to read.
-     * @param csvMapping Mapping of headers field name to column.
      * @return A DataStream of SalesRecord events.
      */
-    public static DataStream<SalesRecord> getRecords(StreamExecutionEnvironment env, String csvFile, ParameterTool csvMapping) {
+    public static DataStream<SalesRecord> getRecords(StreamExecutionEnvironment env, String csvFile) {
         // Defining Input format and parameters for csv parsing.
         RowCsvInputFormat inputFormat = new RowCsvInputFormat(
                 null,
                 inputFieldTypes,
                 "\n",
                 ",");
-        // using mapping for header field to column
-        csvMappings = csvMapping;
 
         DataStream<Row> parsedRows = env.readFile(inputFormat,csvFile)
                 .returns(Types.ROW(inputFieldTypes))
@@ -73,9 +69,9 @@ public class SalesRecordsFileSource {
     @Override
     public SalesRecord map(Row row) throws Exception{
         SalesRecord record = new SalesRecord();
-        record.setRegion((String)row.getField(Integer.parseInt(csvMappings.get("Region","0"))));
-        record.setCountry((String) row.getField(Integer.parseInt(csvMappings.get("Country","1"))));
-        record.setTotalRevenue((double) row.getField(Integer.parseInt(csvMappings.get("Total Revenue","11"))));
+        record.setRegion((String)row.getField(0));
+        record.setCountry((String) row.getField(1));
+        record.setTotalRevenue((double) row.getField(11));
         return record;
     }
     }

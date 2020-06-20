@@ -19,22 +19,33 @@ import org.apache.flink.util.Collector;
 import org.apache.flink.api.java.utils.ParameterTool;
 import scala.xml.PrettyPrinter;
 
+import java.io.InputStream;
 import java.net.URI;
 
 
 public class CountryRevenueCalculator {
+
     public static void main(String[] args) throws Exception {
 
         //Variables initialization, parsing configs for later use
         final ParameterTool params = ParameterTool.fromArgs(args);
-        String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-        String appConfigPath = rootPath + "src/main/resources/config.properties";
-        String csvMappingPath = rootPath + "src/main/resources/csv-column-map.properties";
-        final ParameterTool config = ParameterTool.fromPropertiesFile(params.get("config",appConfigPath));
 
-        final ParameterTool csvMapping = ParameterTool.fromPropertiesFile(params.get("mapping",csvMappingPath));
+        if (params.get("input") == null){
+            System.out.println("Please provide input file with --input. Exiting program");
+            System.exit(-1);
+        }
+        if (params.get("config") == null){
+            System.out.println("Please provide config file with --config. Exiting program");
+            System.exit(-1);
+        }
 
-        String inputPath = rootPath + "data/50000 Sales Records.csv";
+        final ParameterTool config = ParameterTool.fromPropertiesFile(params.get("config"));
+
+        final String inputPath = params.get("input");
+//
+//        System.out.println(params.get("config"));
+//        System.out.println(params.get("mapping"));
+//        System.out.println(inputPath);
 
         // create execution environment
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
@@ -60,7 +71,7 @@ public class CountryRevenueCalculator {
            app becomes free of parsing logic.
 
          */
-        DataStream<SalesRecord> records = SalesRecordsFileSource.getRecords(env, inputPath, csvMapping);
+        DataStream<SalesRecord> records = SalesRecordsFileSource.getRecords(env, inputPath);
 
         DataStream<CountryRevenue> groups = records
                 .keyBy(r -> r.getCountry())
