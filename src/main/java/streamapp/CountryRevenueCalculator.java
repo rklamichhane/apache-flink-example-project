@@ -19,7 +19,7 @@ import org.apache.flink.util.Collector;
 import org.apache.flink.api.java.utils.ParameterTool;
 import scala.xml.PrettyPrinter;
 
-import java.io.InputStream;
+import java.io.File;
 import java.net.URI;
 
 
@@ -40,12 +40,14 @@ public class CountryRevenueCalculator {
         }
 
         final ParameterTool config = ParameterTool.fromPropertiesFile(params.get("config"));
-
         final String inputPath = params.get("input");
-//
-//        System.out.println(params.get("config"));
-//        System.out.println(params.get("mapping"));
-//        System.out.println(inputPath);
+
+        //Checking if file exists
+        File file = new File(inputPath);
+        if (!file.exists()){
+            System.out.println("File doesn't exists. Please provide correct File path.");
+            System.exit(-1);
+        }
 
         // create execution environment
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
