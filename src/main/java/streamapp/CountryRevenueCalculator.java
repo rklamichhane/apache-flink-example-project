@@ -34,7 +34,7 @@ public class CountryRevenueCalculator {
 
         final ParameterTool csvMapping = ParameterTool.fromPropertiesFile(params.get("mapping",csvMappingPath));
 
-        String inputPath = "C:\\Users\\acer\\Desktop\\ml_workplace\\work\\50000 Sales Records.csv";
+        String inputPath = rootPath + "data/50000 Sales Records.csv";
 
         // create execution environment
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
